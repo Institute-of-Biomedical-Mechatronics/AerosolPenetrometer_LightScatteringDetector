@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2021-01-29T07:53:51Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.5.2"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "Penetrometer_V3_PCB"
+        },
+        "Owner": "Sebastian Lifka <sebastian.lifka@me.com>",
+        "Size": {
+            "X": 65,
+            "Y": 31
+        }
+    }
+}
