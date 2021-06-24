@@ -10,7 +10,7 @@ Jun 21 2021
 
 Modified
 --------
-Jun 21 2021
+Jun 24 2021
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -51,17 +51,29 @@ means_scatter = np.mean([scatter1, scatter2, scatter3, scatter4, scatter5,
                          scatter6], axis=0)
 std_scatter = np.std([scatter1, scatter2, scatter3, scatter4, scatter5,
                       scatter6], axis=0, ddof=1)
+
 # Mean values and standard deviation of the scale method
 means_scale = np.mean([scale1, scale2, scale3], axis=0)
 std_scale = np.std([scale1, scale2, scale3], axis=0, ddof=1)
+
+# Mean values and standard deviation of the scatter method
+means_scatter_new = np.mean([scatter1_new, scatter2_new, scatter3_new,
+                             scatter4_new, scatter5_new, scatter6_new], axis=0)
+std_scatter_new = np.std([scatter1_new, scatter2_new, scatter3_new,
+                         scatter4_new, scatter5_new, scatter6_new],
+                         axis=0, ddof=1)
+
 # Correlation coefficient
 r_scatter = np.corrcoef(ati_penetrometer, means_scatter)
 r_scale = np.corrcoef(ati_penetrometer, means_scale)
+r_scatter_new = np.corrcoef([ati_penetrometer[0], ati_penetrometer[1],
+                             ati_penetrometer[4], ati_penetrometer[6]],
+                            means_scatter_new)
 
 # Plot measurement results
-plt.figure(1, figsize=[6.4, 9.6])
+plt.figure(1, figsize=[6.4, 14.4])
 # Subplot scatter method
-plt.subplot(212)
+plt.subplot(312)
 for i in range(7):
     plt.errorbar(ati_penetrometer[i], means_scatter[i], std_scatter[i],
                  marker=marl_er[i], capsize=3, elinewidth=1,
@@ -70,14 +82,14 @@ for i in range(7):
 
 plt.xlabel('penetration in % ATI-penetrometer')
 plt.ylabel('penetration in % scatter method')
-plt.legend()
+plt.legend(fontsize=9)
 plt.grid(True)
-plt.text(-11, 74, 'B', fontsize=14)
+plt.text(-10, 74, 'B', fontsize=14, weight='bold')
 plt.text(60.5, 0.5, 'r = %.3f' % round(r_scatter[0, 1], 3), fontsize=10)
 plt.tight_layout()
 
 # Subplot scale method
-plt.subplot(211)
+plt.subplot(311)
 for i in range(7):
     plt.errorbar(ati_penetrometer[i], means_scale[i], std_scale[i],
                  marker=marl_er[i],
@@ -86,10 +98,30 @@ for i in range(7):
 
 plt.xlabel('penetration in % ATI-penetrometer')
 plt.ylabel('penetration in % scale method')
-plt.legend()
+plt.legend(fontsize=9)
 plt.grid(True)
-plt.text(-11, 74, 'A', fontsize=14)
+plt.text(-10, 74, 'A', fontsize=14, weight='bold')
 plt.text(60.5, 0.5, 'r = %.3f' % round(r_scale[0, 1], 3), fontsize=10)
+plt.tight_layout()
+
+# Subplot scatter method new
+# Measurement values ATI-penetrometer (same as above)
+ati_penetrometer = np.asarray([19.86, 48.58, 7.83, 1.6])
+mask = ['Spunbond', 'Cotton', 'KN95', 'FFP2']
+marl_er = ['o', '<', '^', 'P']
+plt.subplot(313)
+for i in range(4):
+    plt.errorbar(ati_penetrometer[i], means_scatter_new[i], std_scatter_new[i],
+                 marker=marl_er[i], capsize=3, elinewidth=1, label=mask[i],
+                 linestyle='None')
+    plt.plot([0, 70], [0, 70], 'k:', linewidth=1)
+
+plt.xlabel('penetration in % ATI-penetrometer')
+plt.ylabel('penetration in % scatter method')
+plt.legend(fontsize=9)
+plt.grid(True)
+plt.text(-10, 89, 'C', fontsize=14, weight='bold')
+plt.text(60.5, 0.5, 'r = %.3f' % round(r_scatter_new[0, 1], 3), fontsize=10)
 plt.tight_layout()
 plt.savefig('comparison.eps', dpi=300)
 
@@ -149,81 +181,3 @@ ax.set_xticklabels(['0', '1', '2', '3', '4', '5', '6', '7'])
 plt.grid(True, axis='y')
 plt.show()
 plt.savefig('different_lots.eps', dpi=300)
-
-# =============================================================================
-# Comparison of the new scatter detector with the ATI-penetrometer.
-# =============================================================================
-# Measurement values ATI-penetrometer (same as above)
-ati_penetrometer = np.asarray([19.86, 48.58, 7.83, 1.6])
-
-# Measurement series light scattering detector (new version)
-scatter1_new = np.asarray([23.9, 52.9, 4.8, 0.1])
-scatter2_new = np.asarray([20.2, 32.1, 8.4, 0.4])
-scatter3_new = np.asarray([15.1, 61.2, 5.2, 0.1])
-scatter4_new = np.asarray([26, 77.1, 7.2, 0.8])
-scatter5_new = np.asarray([17.6, 82.7, 6.9, 0.1])
-scatter6_new = np.asarray([19.9, 79.9, 5.4, 0.1])
-
-# Mean values and standard deviation of the scatter method
-means_scatter_new = np.mean([scatter1_new, scatter2_new, scatter3_new,
-                             scatter4_new, scatter5_new, scatter6_new], axis=0)
-std_scatter_new = np.std([scatter1_new, scatter2_new, scatter3_new,
-                         scatter4_new, scatter5_new, scatter6_new],
-                         axis=0, ddof=1)
-# Correlation coefficient
-r_scatter_new = np.corrcoef(ati_penetrometer, means_scatter_new)
-
-# Plot measurement results
-plt.figure(4)
-for i in range(4):
-    plt.errorbar(ati_penetrometer[i], means_scatter_new[i], std_scatter_new[i],
-                 marker=marl_er[i], capsize=3, elinewidth=1, label=mask[i],
-                 linestyle='None')
-    plt.plot([0, 70], [0, 70], 'k:', linewidth=1)
-
-plt.xlabel('penetration in % certified penetrometer')
-plt.ylabel('penetration in % scatter method')
-plt.legend()
-plt.grid(True)
-plt.text(60.5, 0.5, 'r = %.3f' % round(r_scatter_new[0, 1], 3), fontsize=10)
-plt.tight_layout()
-
-# =============================================================================
-# 
-# =============================================================================
-# Resistance masurement values ATI-penetrometer
-ati_resistance = np.asanyarray([52.5, 12.7, 22.8])
-# Resistance measurement new scatter method
-resistance_scatter1 = np.asarray([913.3, 1143.6, 854.6])
-resistance_scatter2 = np.asarray([952.6, 644.4, 919.6])
-resistance_scatter3 = np.asarray([864.7, 953.6, 890.1])
-resistance_scatter4 = np.asarray([1086.2, 859.7, 767.8])
-resistance_scatter5 = np.asarray([979, 998.3, 746.8])
-resistance_scatter6 = np.asarray([902.6, 915.1, 814.3])
-
-# Mean values and standard deviation of the resistance measurement with the
-# scatter method.
-means_resistance = np.mean([resistance_scatter1, resistance_scatter2,
-                           resistance_scatter3, resistance_scatter4,
-                           resistance_scatter5, resistance_scatter6], axis=0)
-std_resistance = np.std([resistance_scatter1, resistance_scatter2,
-                         resistance_scatter3, resistance_scatter4,
-                         resistance_scatter5, resistance_scatter6], axis=0,
-                        ddof=1)
-# Correlation coefficient
-r_resistance = np.corrcoef(ati_resistance, means_resistance)
-
-# Plot measurement results
-plt.figure(5)
-for i in range(3):
-    plt.errorbar(ati_resistance[i], means_resistance[i], std_resistance[i],
-                 marker=marl_er[i], capsize=3, elinewidth=1, label=mask[i],
-                 linestyle='None')
-    plt.plot([0, 70], [0, 70], 'k:', linewidth=1)
-
-plt.xlabel('penetration in % certified penetrometer')
-plt.ylabel('penetration in % scatter method')
-plt.legend()
-plt.grid(True)
-plt.text(60.5, 0.5, 'r = %.3f' % round(r_resistance[0, 1], 3), fontsize=10)
-plt.tight_layout()
