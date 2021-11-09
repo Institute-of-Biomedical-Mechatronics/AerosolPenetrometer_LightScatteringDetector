@@ -369,20 +369,20 @@ class Aerosol_Penetrometer_Light_Scattering_Detector_V2:
             warnings.simplefilter("ignore")
 
             plt.ion()
-            fig = plt.figure(1)
-            fig.add_subplot(3, 1, 1)
+            # fig = plt.figure(1)
+            fig = plt.subplot(3, 1, 1)
             plt.axvline(x=measurement_time[start_ind], color='k',
                         linestyle='--')
             plt.axvline(x=measurement_time[stop_ind], color='k',
                         linestyle='--')
             plt.text(measurement_time[start_ind]+0.05, 0, 'Start')
             plt.text(measurement_time[stop_ind]+0.05, 0, 'Stop')
-            fig.add_subplot(3, 1, 2)
+            fig = plt.subplot(3, 1, 2)
             plt.axvline(x=measurement_time[start_ind], color='k',
                         linestyle='--')
             plt.axvline(x=measurement_time[stop_ind], color='k',
                         linestyle='--')
-            fig.add_subplot(3, 1, 3)
+            fig = plt.subplot(3, 1, 3)
             plt.axvline(x=measurement_time[start_ind], color='k',
                         linestyle='--')
             plt.axvline(x=measurement_time[stop_ind], color='k',
